@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function test1(){
+            console.log(this);
+            let test = function() {
+                console.log(this);
+            }
+            test();
+        }
+        /* test1(); */
+
+        let test2 = {
+            name: 'Alex',
+            t1: function(){
+                console.log(this);
+                console.log(this.name);
+                function innerTest(){
+                    console.log(this);
+                    console.log(this.name);
+                }
+                innerTest();
+            }
+        }
+        /* test2.t1(); */
+
+        let test3 = {
+            a: 10,
+            b: 25,
+            t1: function(){
+                console.log(this.a + this.b);
+                console.log(this);
+            }
+        }
+        /* test3.t1();
+        setTimeout(test3.t1(), 1000); */
+
+        /* call() -  столько сколько параметров, apply() - 1 параметр массив */
+        let test4 = {
+            name: 'Alex',
+            t1: function(){
+                console.log(this);
+                function innerTest(a, b){
+                    console.log(this);
+                    console.log(a, b);
+                }
+                innerTest.call(this, 15/*a*/, 12/*b*/);
+                innerTest.apply(this, [41, 32]);
+
+            }
+        }
+        /* test4.t1(); */
+
+        /* bind */
+        let test5 = {
+            t1: function(){
+                console.log(this);
+                function innerTest(){
+                    console.log(this);
+                }
+                let context = innerTest.bind(this);
+                
+                context();
+                context();
+            }
+        }
+        /* test5.t1(); */
+
+        function ShowNubmer(number){
+            this.number = number;
+            this.timer = setInterval(show.bind(this), 1000);
+        
+            function show(){
+                console.log(--this.number);
+                if (this.number == 0){
+                    clearInterval(this.timer);
+                }
+            }
+        }
+        /* let show1 = new ShowNubmer(10); */
+
+       /*  (() => console.log(123))() самовызывающаяся функция*/
+
+        /* function showText(a){
+            return a * a;
+        }
+        let showT = a => a*a; */
+        function ShowNubmer1(number){
+            this.number = number;
+            this.timer = setInterval(
+                () => {console.log(--this.number);
+                if (this.number == 0){
+                    clearInterval(this.timer);
+                }}, 1000);
+            }
+            
+            new ShowNubmer1(10);
+            
+        let person = {
+            name: 'Vlad',
+            age: 25,
+            logInfo: function(job, phone){
+                console.log(`Name is ${this.name}`);
+                console.log(`Age is ${this.age}`);
+                console.log(`Job is ${job}`);
+                console.log(`Phone is ${phone}`);
+            }
+        }
+        person.logInfo('Инвестор', '+15898198593182');
+        person2 = {
+            name: 'Vova',
+            age: 31,
+        }
+        /* 1 */
+        person.logInfo.call(person2, 'FD', '+56423452253');
+        /* 1 */
+        let InfVov = person.logInfo.call(person2);
+        InfVov('FD', '+56423452253')
+        </script>
+</body>
+</html>

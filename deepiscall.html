@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Time(hou, min, sec){
+            this.hou = hou;
+            this.min = min;
+            this.sec = sec;
+            
+            
+            this.showTime = function () {
+                if (this.sec == 60) {this.min++; this.sec = 0};
+                if (this.min == 60) {this.hou++; this.min = 0};
+                if (this.hou == 24) {this.hou = 0;};
+                console.log(`${this.hou <= 9 ? "0" + this.hou : this.hou}:${this.min <= 9 ? "0" + this.min : this.min}:${this.sec <= 9 ? "0" + this.sec : this.sec}`); // сахарный 11 < 9 && console.log('its worked!');
+            }
+            this.fef = function increaseTimer(){
+                this.sec++;
+            }
+            
+            this.shi = function startClock(f1, f2){
+                f1.call(this);
+                f2.call(this);
+            }
+            this.end = setInterval(() => {this.shi(this.fef, this.showTime)}, 1000);
+            
+        }
+
+        let tazik = new Time(23, 59, 55);
+
+    </script>
+</body>
+</html>
